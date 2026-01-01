@@ -6,9 +6,31 @@ const { createToken } = require("../utiles/tokenCreate");
 class authControllers {
   admin_login = async (req, res) => {
     const { email, password } = req.body;
+    // console.log("DB_URL:", process.env.DB_URL);
+    // console.log("CONNECTED DB:", adminModel.db.name);
+    // console.log("COLLECTION:", adminModel.collection.name);
+    // console.log("LOGIN EMAIL RAW:", JSON.stringify(req.body.email));
     console.log(email);
+    console.log("LOGIN EMAIL:", email);
+    const all = await adminModel.find({}).select("+password");
+    console.log(
+      "ALL ADMINS:",
+      all.map((a) => ({ id: a._id, email: a.email, role: a.role }))
+    );
+
+    // const admin2 = await adminModel
+    //   .findOne({
+    //     email: { $regex: "^p@gmail\\.com", $options: "i" },
+    //   })
+    //   .select("+password");
+    // console.log("REGEX MATCH ADMIN:", admin2);
+    // const count = await adminModel.countDocuments();
+    // console.log("ADMIN COUNT:", count);
     try {
+      const emailTrim = email.trim();
       const admin = await adminModel.findOne({ email }).select("+password");
+      // console.log("ADMIN FOUND:", admin);
+
       if (admin) {
         const match = await bcrypt.compare(password, admin.password);
         if (match) {

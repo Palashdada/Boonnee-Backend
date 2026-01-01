@@ -4,10 +4,21 @@ require("dotenv").config();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { dbConnect } = require("./utiles/db");
+// app.use(express.json());
 
+// const corsOptions = {
+//   origin: "https://dreamy-gaufre-cdd089.netlify.app",
+//   credentials: true,
+//   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   optionsSuccessStatus: 200,
+// };
+
+// app.use(cors(corsOptions));
+// app.options("*", cors(corsOptions));
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["https://dreamy-gaufre-cdd089.netlify.app"],
     credentials: true,
   })
 );
